@@ -3,9 +3,11 @@
 
 int main()
 {
-    int a[] = {1,-2,3,4,-5,6};
-    int b = maxsubsum(a,0,sizeof(a)/sizeof(int));
-    printf("result:%d",b);
+    int a[] = {1,-2,3,-4,5,-6};
+    int b = maxsubsum(a,0,sizeof(a)/sizeof(int)-1);
+    printf("one result :%d\r\n",b);
+    b = maxsubsumquick(a,sizeof(a)/sizeof(int));
+    printf("two result :%d\r\n",b);
     return 0;
 }
 
@@ -21,6 +23,7 @@ int maxsubsum( const int a[],int left,int right )
         //printf("left:%d,right:%d a[left]:%d\r\n",left,right,a[left]);
         if(a[left]>0)
         {
+
             return a[left];
         }
         else
@@ -51,7 +54,7 @@ int maxsubsum( const int a[],int left,int right )
         }
 
     }
-    printf("left: %d,right: %d,maxleft:%d,maxright:%d,maxsubleft:%d,maxsubright:%d\r\n",left,right,maxleft,maxright,maxsubleft,maxsubright);
+    //printf("left: %d,right: %d,maxleft:%d,maxright:%d,maxsubleft:%d,maxsubright:%d\r\n",left,right,maxleft,maxright,maxsubleft,maxsubright);
     return maxsubthree(maxleft,maxright,(maxsubleft+maxsubright));
 
 }
@@ -59,4 +62,22 @@ int maxsubsum( const int a[],int left,int right )
 int maxsubthree(int a,int b,int c)
 {
     return a >b?(a>c?a:c):(b>c?b:c);
+}
+
+int maxsubsumquick(const int a[],int size)
+{
+    int thissub=0,maxsub=0,i;
+    for( i=0; i<size; i++)
+    {
+        thissub+=a[i];
+        if(thissub>maxsub)
+        {
+            maxsub=thissub;
+        }
+        else if(thissub<0)
+        {
+            thissub=0;
+        }
+    }
+    return maxsub;
 }
